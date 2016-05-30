@@ -1,5 +1,6 @@
 package com.gogbuy.analysis.system.websocket;
 
+import org.apache.commons.collections.MapUtils;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
@@ -14,6 +15,11 @@ public class AnalysisWebSocketHandler extends TextWebSocketHandler{
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
         System.out.println("afterConnectionEstablished");
+        String userId = MapUtils.getString(session.getAttributes(),"userId");
+        System.out.println("afterConnectionEstablished userId = "+userId);
+        WebSocketSessionUtils.add(userId,session);
+        TextMessage returnMessage = new TextMessage("Hi everyone:"+userId+" is join,be careful");
+        WebSocketSessionUtils.sendMessageToAllTarget(returnMessage);
     }
 
     @Override
@@ -26,8 +32,9 @@ public class AnalysisWebSocketHandler extends TextWebSocketHandler{
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
         System.out.println("handleTextMessage");
-        TextMessage returnMessage = new TextMessage(message.getPayload()+" received at server");
-        session.sendMessage(returnMessage);
+        String userId = MapUtils.getString(session.getAttributes(),"userId");
+        TextMessage returnMessage = new TextMessage("Hi:"+userId+"..your message:"+message.getPayload()+" I have received,now I tell you");
+        WebSocketSessionUtils.sendMessageToTarget(userId,returnMessage);
     }
 
     @Override
@@ -40,12 +47,16 @@ public class AnalysisWebSocketHandler extends TextWebSocketHandler{
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         super.handleTransportError(session, exception);
         System.out.println("handleTransportError");
+        String userId = MapUtils.getString(session.getAttributes(),"userId");
+        WebSocketSessionUtils.remove(userId);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
         System.out.println("afterConnectionClosed");
+        String userId = MapUtils.getString(session.getAttributes(),"userId");
+        WebSocketSessionUtils.remove(userId);
     }
 
     @Override

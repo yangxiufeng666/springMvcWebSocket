@@ -52,13 +52,17 @@
                 alert('Select whether to use W3C WebSocket or SockJS');
                 return;
             }
-            if ('WebSocket' in window) {
-                ws = new WebSocket(url);//ws://localhost:8080/myHandler
-            } else if ('MozWebSocket' in window) {
-                ws = new MozWebSocket(url);
-            } else {
+            if (url.indexOf("sockjs")!=-1){
+                log("hhhhhhhh");
                 ws = new SockJS(url);
+            }else {
+                if ('WebSocket' in window) {
+                    ws = new WebSocket(url);//ws://localhost:8080/myHandler
+                } else {
+                    ws = new SockJS(url);
+                }
             }
+
 
             ws.onopen = function () {
                 setConnected(true);
@@ -93,17 +97,14 @@
         }
 
         function updateUrl(urlPath) {
-            if (urlPath.indexOf('sockjs') != -1) {
-                url = urlPath;
-                document.getElementById('sockJsTransportSelect').style.visibility = 'visible';
-            }
-            else {
+            if (urlPath.indexOf("/sockjs")!=-1){
+                url = 'http://'+ window.location.host + urlPath + "?userId="+generateMixed(10);
+            }else{
                 if (window.location.protocol == 'http:') {
-                    url = 'ws://' + window.location.host + urlPath;
+                    url = 'ws://' + window.location.host + urlPath+ "?userId="+generateMixed(10);
                 } else {
-                    url = 'wss://' + window.location.host + urlPath;
+                    url = 'wss://' + window.location.host + urlPath+ "?userId="+generateMixed(10);
                 }
-                document.getElementById('sockJsTransportSelect').style.visibility = 'hidden';
             }
         }
 
@@ -123,6 +124,16 @@
             }
             console.scrollTop = console.scrollHeight;
         }
+        var chars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
+        function generateMixed(n) {
+            var res = "";
+            for(var i = 0; i < n ; i ++) {
+                var id = Math.ceil(Math.random()*35);
+                res += chars[id];
+            }
+            return res;
+        }
     </script>
 </head>
 <body>
@@ -134,7 +145,7 @@
         <input id="radio1" type="radio" name="group1" onclick="updateUrl('/myHandler');">
         <label for="radio1">W3C WebSocket</label>
         <br>
-        <input id="radio2" type="radio" name="group1" onclick="updateUrl('/myHandler');">
+        <input id="radio2" type="radio" name="group1" onclick="updateUrl('/sockjs/myHandler');">
         <label for="radio2">SockJS</label>
 
         <div id="sockJsTransportSelect" style="visibility:hidden;">
