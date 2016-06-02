@@ -13,9 +13,9 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
  * Time:9:40
  * ProjectName:SpringWebApp
  */
-@Configuration
-@EnableWebSocket
-@EnableWebMvc
+//@Configuration
+//@EnableWebSocket
+//@EnableWebMvc
 public class WebSocketConfig implements WebSocketConfigurer{
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
         webSocketHandlerRegistry.addHandler(myHandler(),"/myHandler").addInterceptors(new HandshakeInterceptor());

@@ -20,13 +20,19 @@
         <property name="prefix" value="/WEB-INF/view/"/>
         <property name="suffix" value=".jsp" />
     </bean>
-    <bean id="myHandler" class="com.gogbuy.analysis.system.websocket.AnalysisWebSocketHandler"/>
+    <!--<bean id="myHandler" class="com.gogbuy.analysis.system.websocket.AnalysisWebSocketHandler"/>
     <websocket:handlers>
         <websocket:mapping path="/myHandler" handler="myHandler"/>
         <websocket:handshake-interceptors>
             <bean class="com.gogbuy.analysis.system.websocket.HandshakeInterceptor"/>
         </websocket:handshake-interceptors>
-    </websocket:handlers>
+    </websocket:handlers>-->
+    <websocket:message-broker application-destination-prefix="/app">
+        <websocket:stomp-endpoint path="/portfolio">
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <websocket:simple-broker prefix="/topic, /queue"/>
+    </websocket:message-broker>
     <bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
         <property name="maxTextMessageBufferSize" value="8192"/>
         <property name="maxBinaryMessageBufferSize" value="8192"/>
