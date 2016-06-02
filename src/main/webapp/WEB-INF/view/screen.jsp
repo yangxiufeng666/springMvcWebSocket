@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <script src="http://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
-    <script src="http://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
+    <script src="/resources/js/stomp.js"></script>
     <script type="text/javascript">
         var stompClient = null;
         function setConnected(connected) {
@@ -19,13 +19,13 @@
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame) {
                 setConnected(true);
-                console.log('Connected: ' + frame);
+//                console.log('Connected: ' + frame);
                 stompClient.subscribe('/topic/showResult', function(calResult){
                     showResult(JSON.parse(calResult.body).result);
                 });
             },function(error) {
                 // display the error's message header:
-                alert(error.headers.message);
+                alert(error);
             });
         }
         function disconnect() {
