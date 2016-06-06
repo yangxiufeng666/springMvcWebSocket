@@ -4,6 +4,7 @@
     <title>WebSocket demo</title>
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <style type="text/css">
         #connect-container {
@@ -45,7 +46,6 @@
             document.getElementById('connect').disabled = connected;
             document.getElementById('disconnect').disabled = !connected;
             document.getElementById('echo').disabled = !connected;
-            document.getElementById("makpairs").disabled = !connected;
         }
 
         function connect() {
@@ -55,6 +55,7 @@
                 return;
             }
             if (url.indexOf("sockjs")!=-1){
+                log("hhhhhhhh");
                 ws = new SockJS(url);
             }else {
                 if ('WebSocket' in window) {
@@ -95,9 +96,6 @@
             } else {
                 alert('connection not established, please connect.');
             }
-        }
-        function makpairs(){
-
         }
 
         function updateUrl(urlPath) {
@@ -145,7 +143,7 @@
     rely on Javascript being enabled. Please enable
     Javascript and reload this page!</h2></noscript>
 <div>
-    <label>这个是PAD端</label>
+    <label>这个是大屏幕</label>
     <div id="connect-container">
         <input id="radio1" type="radio" name="group1" onclick="updateUrl('/myHandler');">
         <label for="radio1">W3C WebSocket</label>
@@ -168,12 +166,6 @@
         <div>
             <button id="connect" onclick="connect();">Connect</button>
             <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
-        </div>
-        <div>
-            <input type="number" id="pairMsg" style="width: 350px" value="1"/>
-        </div>
-        <div>
-            <button id="makpairs" onclick="makpairs();" disabled="disabled">配对</button>
         </div>
         <div>
             <textarea id="message" style="width: 350px">Here is a message!</textarea>
