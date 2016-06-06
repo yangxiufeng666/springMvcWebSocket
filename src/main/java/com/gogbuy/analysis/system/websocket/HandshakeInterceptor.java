@@ -22,7 +22,6 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor{
         if (getSession(request) != null) {
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
             HttpServletRequest httpServletRequest = servletRequest.getServletRequest();
-            //TODO 获取登录的用户信息，用来区别对应的WebSocketHandler,以便发送消息
             attributes.put("userId", httpServletRequest.getParameter("userId"));
         }
         return super.beforeHandshake(request, response, wsHandler, attributes);
