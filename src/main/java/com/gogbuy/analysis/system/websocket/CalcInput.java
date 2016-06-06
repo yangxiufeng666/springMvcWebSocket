@@ -24,4 +24,12 @@ public class CalcInput {
     public void setNum2(int num2) {
         this.num2 = num2;
     }
+
+    @Override
+    public String toString() {
+        return "CalcInput{" +
+                "num1=" + num1 +
+                ", num2=" + num2 +
+                '}';
+    }
 }

@@ -9,10 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by Mr.Yangxiufeng on 2016/5/26.
  */
 @Controller
-public class WelcomeController {
-    @RequestMapping(value = "/wa",method = RequestMethod.GET)
+public class ScreenController {
+    @RequestMapping(value = "/screen",method = RequestMethod.GET)
     public ModelAndView Hello(ModelAndView modelAndView){
-        modelAndView.setViewName("/index");
+        modelAndView.setViewName("screen");
         return modelAndView;
     }
 }

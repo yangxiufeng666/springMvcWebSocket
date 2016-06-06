@@ -19,14 +19,13 @@ public class WebSocketBrokerConfig extends AbstractWebSocketMessageBrokerConfigu
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
         //webSocket连接url
         stompEndpointRegistry.addEndpoint("sockjs/portfolio").withSockJS();
-//        stompEndpointRegistry.addEndpoint("/portfolio");
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         super.configureMessageBroker(registry);
-        //这句表示在topic和queue这两个域上可以向客户端发消息；
-        registry.enableSimpleBroker("/topic","/queue");
+        //这句表示在makePair和queue这两个域上可以向客户端发消息；
+        registry.enableSimpleBroker("/makePair","/padMsg","screenMsg");
         //这句表示客户端向服务端发送时的主题上面需要加"/app"作为前缀
         registry.setApplicationDestinationPrefixes("/app");
         //这句表示给指定用户发送（一对一）的主题前缀是“/user/”
