@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class WelcomeController {
-    @RequestMapping(value = "/wa",method = RequestMethod.GET)
+    @RequestMapping(value = "/pad",method = RequestMethod.GET)
     public ModelAndView Hello(ModelAndView modelAndView){
         modelAndView.setViewName("/index");
         return modelAndView;

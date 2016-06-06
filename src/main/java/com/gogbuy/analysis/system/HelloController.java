@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class HelloController {
-    @RequestMapping(value = "/hello",method = RequestMethod.GET)
+    @RequestMapping(value = "/screen",method = RequestMethod.GET)
     public ModelAndView Hello(ModelAndView modelAndView){
         modelAndView.setViewName("screen");
         return modelAndView;
